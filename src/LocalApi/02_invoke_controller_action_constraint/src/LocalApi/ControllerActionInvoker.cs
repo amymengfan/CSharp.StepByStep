@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using LocalApi.MethodAttributes;
 
 namespace LocalApi
 {
@@ -35,7 +37,10 @@ namespace LocalApi
 
         static HttpResponseMessage ProcessConstraint(MethodInfo method, HttpMethod methodConstraint)
         {
-            return null;
+            var attributes = method.GetCustomAttributes().OfType<IMethodProvider>();
+            return attributes.Any(e => e.Method == methodConstraint)
+                ? null
+                : new HttpResponseMessage(HttpStatusCode.MethodNotAllowed);
         }
 
         #endregion
