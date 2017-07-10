@@ -19,8 +19,7 @@ namespace LocalApi.Test.ControllerActionInvokerFacts
             }
         }
 
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
-        class ControllerWithPublicAction : HttpController
+        [SuppressMessage("ReSharper", "UnusedMember.Local")] class ControllerWithPublicAction : HttpController
         {
             public HttpResponseMessage Get()
             {
@@ -69,7 +68,7 @@ namespace LocalApi.Test.ControllerActionInvokerFacts
         {
             HttpResponseMessage response = ControllerActionInvoker.InvokeAction(
                 new ActionDescriptor(new ControllerWithErrorAction(), "Get"));
-            
+
             Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
         }
     }
