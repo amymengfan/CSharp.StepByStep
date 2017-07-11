@@ -16,7 +16,7 @@ namespace LocalApi.Test.DependencyResolverFacts.DefaultImpl
             var controllerTypeResolver = new DefaultHttpControllerTypeResolver();
             var resolver = new DefaultDependencyResolver(controllerTypeResolver.GetControllerTypes(ControllerAssemblies));
             Assert.Equal(
-                typeof(ControllerWithoutAction), 
+                typeof(ControllerWithoutAction),
                 resolver.GetService(typeof(ControllerWithoutAction)).GetType());
         }
 

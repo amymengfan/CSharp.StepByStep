@@ -12,12 +12,12 @@ namespace LocalApi
         #region Please modify the following code to pass the test
 
         /*
-         * In previous practice. We refactored InvokeAction method. Now we have 
-         * renamed its name from "InvokeAction" to "InvokeActionInternal". The 
+         * In previous practice. We refactored InvokeAction method. Now we have
+         * renamed its name from "InvokeAction" to "InvokeActionInternal". The
          * InvokeAction method will no longer accept ActionDescriptor instance.
          * Instead, it will create the ActionDescriptor instance from a matching
          * route and an IDependencyResolver instance.
-         * 
+         *
          * The matched route contains the type of the controller, the name of the
          * action and the method constraint. It should use a resolver to create
          * controller from its type.
@@ -25,7 +25,16 @@ namespace LocalApi
 
         public static HttpResponseMessage InvokeAction(HttpRoute matchedRoute, IDependencyResolver resolver)
         {
-            return InvokeActionInternal(new ActionDescriptor(null, matchedRoute.ActionName, matchedRoute.MethodConstraint));
+            var controller = CreateHttpController(matchedRoute.ControllerType, resolver);
+            return controller == null
+                ? new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                : InvokeActionInternal(new ActionDescriptor(controller, matchedRoute.ActionName, matchedRoute.MethodConstraint));
+        }
+
+        static HttpController CreateHttpController(Type controllerType, IDependencyResolver resolver)
+        {
+            var service = resolver.GetService(controllerType);
+            return service == null ? null : (HttpController) Activator.CreateInstance(service.GetType());
         }
 
         #endregion

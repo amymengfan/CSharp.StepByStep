@@ -85,7 +85,7 @@ namespace LocalApi.Test.ControllerActionInvokerFacts
             var resolver = new DefaultDependencyResolver(controllerTypeResolver.GetControllerTypes(ControllerAssemblies));
             HttpResponseMessage response = ControllerActionInvoker.InvokeAction(
                 matchedRoute, resolver);
-            
+
             Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
         }
 
@@ -98,7 +98,7 @@ namespace LocalApi.Test.ControllerActionInvokerFacts
             var resolver = new DefaultDependencyResolver(controllerTypeResolver.GetControllerTypes(ControllerAssemblies));
             HttpResponseMessage response = ControllerActionInvoker.InvokeAction(
                 matchedRoute, resolver);
-            
+
             Assert.Equal(HttpStatusCode.MethodNotAllowed, response.StatusCode);
         }
 
@@ -108,15 +108,15 @@ namespace LocalApi.Test.ControllerActionInvokerFacts
         public void should_invoke_method_with_multiple_methods(string method)
         {
             var matchedRoute = new HttpRoute(
-                typeof(ControllerWithMultipleMethodAnnotation), 
-                "Invoke", 
+                typeof(ControllerWithMultipleMethodAnnotation),
+                "Invoke",
                 new HttpMethod(method));
 
             var controllerTypeResolver = new DefaultHttpControllerTypeResolver();
             var resolver = new DefaultDependencyResolver(controllerTypeResolver.GetControllerTypes(ControllerAssemblies));
             HttpResponseMessage response = ControllerActionInvoker.InvokeAction(
                 matchedRoute, resolver);
-            
+
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
