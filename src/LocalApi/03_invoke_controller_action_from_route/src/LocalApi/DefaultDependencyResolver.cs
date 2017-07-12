@@ -23,7 +23,7 @@ namespace LocalApi
          * default constructor will not be supported.
          */
 
-        HashSet<Type> controllerTypes;
+        readonly HashSet<Type> controllerTypes;
 
         internal DefaultDependencyResolver(IEnumerable<Type> controllerTypes)
         {
@@ -32,7 +32,7 @@ namespace LocalApi
 
         public void Dispose()
         {
-            controllerTypes = null;
+            controllerTypes.Clear();
         }
 
         public object GetService(Type type)

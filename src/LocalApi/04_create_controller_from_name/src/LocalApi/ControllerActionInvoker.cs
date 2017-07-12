@@ -26,11 +26,10 @@ namespace LocalApi
              * IDependencyResolver.
              */
             var controller = CreateController(matchedRoute, controllerTypes, resolver, controllerFactory);
-
-            if (controller == null) { return new HttpResponseMessage(HttpStatusCode.InternalServerError); }
-
-            return InvokeActionInternal(
-                new ActionDescriptor(null, matchedRoute.ActionName, matchedRoute.MethodConstraint));
+            return controller == null
+                ? new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                : InvokeActionInternal(new ActionDescriptor(controller, matchedRoute.ActionName,
+                    matchedRoute.MethodConstraint));
 
             #endregion
         }

@@ -18,10 +18,10 @@ namespace LocalApi
              * form the controllerTypes collection to get the correct controller type,
              * then create instance from resolver.
              */
-            var count = controllerTypes.Count(e => e.Name == controllerName);
+            var count = controllerTypes.Count(e => e.Name.Equals(controllerName, StringComparison.OrdinalIgnoreCase));
             if (count > 1) throw new ArgumentException();
 
-            var type = controllerTypes.SingleOrDefault(e => e.Name == controllerName);
+            var type = controllerTypes.SingleOrDefault(e => e.Name.Equals(controllerName, StringComparison.OrdinalIgnoreCase));
             return type == null ? null : (HttpController) resolver.GetService(type);
 
             #endregion

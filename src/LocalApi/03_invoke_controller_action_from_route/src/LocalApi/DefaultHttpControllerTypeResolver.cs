@@ -17,7 +17,7 @@ namespace LocalApi
         public ICollection<Type> GetControllerTypes(IEnumerable<Assembly> assemblies)
         {
             return assemblies.SelectMany(e => e.ExportedTypes)
-                .Where(e => e.IsSubclassOf(typeof(HttpController)))
+                .Where(e => !e.IsAbstract && e.IsSubclassOf(typeof(HttpController)))
                 .ToList();
         }
 
