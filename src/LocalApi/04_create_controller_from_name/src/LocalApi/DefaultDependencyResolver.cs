@@ -6,7 +6,7 @@ namespace LocalApi
     class DefaultDependencyResolver : IDependencyResolver
     {
         readonly ISet<Type> controllerTypes;
-        
+
         internal DefaultDependencyResolver(IEnumerable<Type> controllerTypes)
         {
             this.controllerTypes = new HashSet<Type>(controllerTypes);

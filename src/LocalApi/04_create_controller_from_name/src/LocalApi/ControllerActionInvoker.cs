@@ -21,15 +21,33 @@ namespace LocalApi
             /*
              * In this test, you have to create the controller from its name rather
              * than its type. So we introduced a new interface called IControllerFactory.
-             * It will create controller directly by its name with the help of 
+             * It will create controller directly by its name with the help of
              * controller type collection returned by IHttpControllerTypeResolver and
              * IDependencyResolver.
              */
+            var controller = CreateController(matchedRoute, controllerTypes, resolver, controllerFactory);
+
+            if (controller == null) { return new HttpResponseMessage(HttpStatusCode.InternalServerError); }
 
             return InvokeActionInternal(
                 new ActionDescriptor(null, matchedRoute.ActionName, matchedRoute.MethodConstraint));
 
             #endregion
+        }
+
+        static HttpController CreateController(HttpRoute matchedRoute,
+            ICollection<Type> controllerTypes,
+            IDependencyResolver resolver,
+            IControllerFactory controllerFactory)
+        {
+            try
+            {
+                return controllerFactory.CreateController(matchedRoute.ControllerName, controllerTypes, resolver);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         static HttpResponseMessage InvokeActionInternal(ActionDescriptor actionDescriptor)
