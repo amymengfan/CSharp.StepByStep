@@ -33,8 +33,7 @@ namespace LocalApi
 
         static HttpController CreateHttpController(Type controllerType, IDependencyResolver resolver)
         {
-            var service = resolver.GetService(controllerType);
-            return service == null ? null : (HttpController) Activator.CreateInstance(service.GetType());
+            return resolver.GetService(controllerType) == null ? null : (HttpController) Activator.CreateInstance(controllerType);
         }
 
         #endregion
