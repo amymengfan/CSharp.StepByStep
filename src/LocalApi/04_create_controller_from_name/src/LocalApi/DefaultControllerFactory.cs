@@ -18,16 +18,11 @@ namespace LocalApi
              * form the controllerTypes collection to get the correct controller type,
              * then create instance from resolver.
              */
-
-            throw new NotImplementedException();
-
             var count = controllerTypes.Count(e => e.Name == controllerName);
             if (count > 1) throw new ArgumentException();
 
             var type = controllerTypes.SingleOrDefault(e => e.Name == controllerName);
-            if (type == null) return null;
-
-            return resolver.GetService(type) == null ? null : (HttpController) Activator.CreateInstance(type);
+            return type == null ? null : (HttpController) resolver.GetService(type);
 
             #endregion
         }

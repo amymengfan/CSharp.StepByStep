@@ -25,15 +25,15 @@ namespace LocalApi
 
         public static HttpResponseMessage InvokeAction(HttpRoute matchedRoute, IDependencyResolver resolver)
         {
-            var controller = CreateHttpController(matchedRoute.ControllerType, resolver);
+            var controller = CreateController(matchedRoute.ControllerType, resolver);
             return controller == null
                 ? new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 : InvokeActionInternal(new ActionDescriptor(controller, matchedRoute.ActionName, matchedRoute.MethodConstraint));
         }
 
-        static HttpController CreateHttpController(Type controllerType, IDependencyResolver resolver)
+        static HttpController CreateController(Type controllerType, IDependencyResolver resolver)
         {
-            return resolver.GetService(controllerType) == null ? null : (HttpController) Activator.CreateInstance(controllerType);
+            return (HttpController) resolver.GetService(controllerType);
         }
 
         #endregion

@@ -37,7 +37,7 @@ namespace LocalApi
 
         public object GetService(Type type)
         {
-            return controllerTypes.Any(e => e == type) ? Activator.CreateInstance(type) : null;
+            return controllerTypes.Contains(type) ? Activator.CreateInstance(type) : null;
         }
 
         #endregion
