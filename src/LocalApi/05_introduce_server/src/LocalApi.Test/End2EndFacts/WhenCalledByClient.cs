@@ -99,7 +99,7 @@ namespace LocalApi.Test.End2EndFacts
                     "Post",
                     HttpMethod.Post,
                     "controller-with-mismatched-action"));
-            
+
             using (httpServer)
             using (var client = new HttpClient(httpServer))
             {
@@ -168,7 +168,7 @@ namespace LocalApi.Test.End2EndFacts
                     "Get",
                     HttpMethod.Get,
                     "non-public-action"));
-            
+
             using (httpServer)
             using (var client = new HttpClient(httpServer))
             {

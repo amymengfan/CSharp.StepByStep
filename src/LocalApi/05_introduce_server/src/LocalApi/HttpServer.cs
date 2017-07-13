@@ -16,16 +16,30 @@ namespace LocalApi
          * You can add non-public fields and members for help but you should not modify
          * the public interfaces.
          */
+        readonly HttpConfiguration configuration;
 
         public HttpServer(HttpConfiguration configuration)
         {
-            throw new NotImplementedException();
+            this.configuration = configuration;
         }
 
         protected override Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var route = configuration.Routes.GetRouteData(request);
+
+            return Task.Run(GetResponse(route), cancellationToken);
+        }
+
+        Func<HttpResponseMessage> GetResponse(HttpRoute route)
+        {
+            if (route == null) return () => new HttpResponseMessage(HttpStatusCode.NotFound);
+
+            return () => ControllerActionInvoker.InvokeAction(
+                route,
+                configuration.CachedControllerTypes,
+                configuration.DependencyResolver,
+                configuration.ControllerFactory);
         }
 
         #endregion
