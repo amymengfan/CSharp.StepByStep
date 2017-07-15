@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using LocalApi.Routing;
 
 namespace LocalApi
@@ -22,12 +21,12 @@ namespace LocalApi
             HttpConfiguration configuration,
             HttpRoute matchedRoute)
         {
-            throw new NotImplementedException();
+            request.Properties.Add(requestContextKey, new HttpRequestContext(configuration, matchedRoute));
         }
 
         public static HttpRequestContext GetRequestContext(this HttpRequestMessage request)
         {
-            throw new NotImplementedException();
+            return (HttpRequestContext) request.Properties[requestContextKey];
         }
 
         #endregion

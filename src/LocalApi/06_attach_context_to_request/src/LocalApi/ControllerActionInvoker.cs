@@ -74,13 +74,18 @@ namespace LocalApi
 
         /*
          * You have to re-implement this method becuase it should support sync/async controller
-         * actions. You can distinguish them by their return value type. The Type of the sync one is 
+         * actions. You can distinguish them by their return value type. The Type of the sync one is
          * HttpResponseMessage, while the Type of async return value is Task<HttpResponseMessage>.
          */
 
         static Task<HttpResponseMessage> Execute(ActionDescriptor actionDescriptor, MethodInfo method)
         {
-            throw new NotImplementedException();
+            var response = method.Invoke(actionDescriptor.Controller, null);
+            if (response is HttpResponseMessage)
+            {
+                return Task.FromResult((HttpResponseMessage) response);
+            }
+            return Task.Run(() => (Task<HttpResponseMessage>) response);
         }
 
         #endregion
