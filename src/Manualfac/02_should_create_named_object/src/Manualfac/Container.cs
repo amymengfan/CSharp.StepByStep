@@ -5,7 +5,7 @@ namespace Manualfac
 {
     public class Container : IComponentContext
     {
-        readonly Dictionary<Service, ComponentRegistration> registrations = 
+        readonly Dictionary<Service, ComponentRegistration> registrations =
             new Dictionary<Service, ComponentRegistration>();
 
         public object ResolveComponent(Service service)

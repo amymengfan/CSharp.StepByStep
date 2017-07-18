@@ -105,7 +105,7 @@ namespace Manualfac.Test
 
             object o1 = c.ResolveNamed<object>(name);
             Assert.Same(@object, o1);
-            
+
             Assert.Throws<DependencyResolutionException>(() => c.Resolve<object>());
         }
     }
