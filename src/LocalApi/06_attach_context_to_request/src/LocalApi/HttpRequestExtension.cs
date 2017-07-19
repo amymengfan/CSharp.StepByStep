@@ -21,12 +21,14 @@ namespace LocalApi
             HttpConfiguration configuration,
             HttpRoute matchedRoute)
         {
-            request.Properties.Add(requestContextKey, new HttpRequestContext(configuration, matchedRoute));
+            request.Properties[requestContextKey] = new HttpRequestContext(configuration, matchedRoute);
         }
 
         public static HttpRequestContext GetRequestContext(this HttpRequestMessage request)
         {
-            return (HttpRequestContext) request.Properties[requestContextKey];
+            return request.Properties.ContainsKey(requestContextKey)
+                ? (HttpRequestContext) request.Properties[requestContextKey]
+                : null;
         }
 
         #endregion
