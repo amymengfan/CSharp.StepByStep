@@ -6,7 +6,7 @@ namespace Manualfac
     {
         Service Service { get; set; }
         IInstanceActivator Activator { get; set; }
-        
+
         IRegistrationBuilder As<TService>();
         IRegistrationBuilder Named<TService>(string name);
         ComponentRegistration Build();

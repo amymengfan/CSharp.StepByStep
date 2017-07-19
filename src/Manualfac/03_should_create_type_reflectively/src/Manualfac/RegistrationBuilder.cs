@@ -1,5 +1,4 @@
-﻿using System;
-using Manualfac.Activators;
+﻿using Manualfac.Activators;
 using Manualfac.Services;
 
 namespace Manualfac
