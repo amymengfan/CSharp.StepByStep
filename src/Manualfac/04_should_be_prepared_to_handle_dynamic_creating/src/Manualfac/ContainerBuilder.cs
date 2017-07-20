@@ -10,7 +10,10 @@ namespace Manualfac
 
         public void RegisterCallback(Action<ComponentRegistry> callback)
         {
-            if (callback == null) { throw new ArgumentNullException(nameof(callback)); }
+            if (callback == null)
+            {
+                throw new ArgumentNullException(nameof(callback));
+            }
             callbacks.Add(callback);
         }
 
@@ -27,10 +30,15 @@ namespace Manualfac
              * Since all the build operation can be considered as constructing the
              * ComponentRegistry. Please create a component registry and construct
              * its data. Then attach the registry to Container.
-             * 
+             *
              */
+            var registry = new ComponentRegistry();
+            callbacks.ForEach(c => c(registry));
 
-            throw new NotImplementedException();
+            var container = new Container(registry);
+            hasBeenBuilt = true;
+
+            return container;
 
             #endregion
         }

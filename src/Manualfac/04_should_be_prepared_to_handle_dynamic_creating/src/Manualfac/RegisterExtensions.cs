@@ -40,12 +40,22 @@ namespace Manualfac
              * Since we have create a concrete type ComponentRegistry to manage the registion
              * work, all the registration operation can be considered as an action that add
              * somekind of component registration to the registry.
-             * 
+             *
              * In order to reuse the code, we re-implement the extension method to replace the
              * instance member function.
              */
+            if (cb == null) throw new ArgumentNullException(nameof(cb));
+            if (registration == null) throw new ArgumentNullException(nameof(registration));
 
-            throw new NotImplementedException();
+            var builder = new RegistrationBuilder
+            {
+                Service = registration.Service,
+                Activator = registration.Activator
+            };
+
+            cb.RegisterCallback(r => r.Register(builder.Build()));
+
+            return builder;
 
             #endregion
         }

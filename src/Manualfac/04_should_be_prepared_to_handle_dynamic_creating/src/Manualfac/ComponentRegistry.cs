@@ -16,8 +16,9 @@ namespace Manualfac
              * We have moved the odd method from Container to ComponentRegistry. Please
              * implement the method.
              */
+            if (registration == null) throw new ArgumentNullException(nameof(registration));
 
-            throw new NotImplementedException();
+            serviceInfos[registration.Service] = registration;
 
             #endregion
         }
@@ -29,9 +30,11 @@ namespace Manualfac
             /*
              * Please implement the method to get registration from the registered services.
              */
+            if (service == null) throw new ArgumentNullException(nameof(service));
 
             registration = null;
-            throw new NotImplementedException();
+
+            return serviceInfos.TryGetValue(service, out registration);
 
             #endregion
         }
