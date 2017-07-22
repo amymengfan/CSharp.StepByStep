@@ -5,7 +5,7 @@ namespace Manualfac
     public class ActivationRegistrationData
     {
         public ActivationRegistrationData(
-            IInstanceActivator activator, 
+            IInstanceActivator activator,
             Type implementatorType)
         {
             if (activator == null) { throw new ArgumentNullException(nameof(activator)); }

@@ -16,7 +16,7 @@ namespace Manualfac.Services
         {
             if (null == other) return false;
             if (ReferenceEquals(this, other)) return true;
-            return ServiceType == other.ServiceType && 
+            return ServiceType == other.ServiceType &&
                 string.Equals(name, other.name, StringComparison.Ordinal);
         }
 

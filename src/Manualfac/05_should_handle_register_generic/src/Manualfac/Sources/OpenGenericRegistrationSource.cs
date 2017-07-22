@@ -22,12 +22,21 @@ namespace Manualfac.Sources
              * This source has 2 properties: the genericService is used as the key to match the
              * service argument. And the implementorType is used to record the actual type used
              * to create instances.
-             * 
-             * This method will try matching the constructed service to an non-constructed 
+             *
+             * This method will try matching the constructed service to an non-constructed
              * generic type of genericService. If it is matched, then an concrete component
              * registration needed wll be invoked.
              */
-            throw new NotImplementedException();
+            var serviceWithType = service as IServiceWithType;
+            if (serviceWithType == null) return null;
+
+            var concreteType = serviceWithType.ServiceType;
+            if (!concreteType.IsConstructedGenericType) return null;
+
+            if (!serviceWithType.ChangeType(concreteType.GetGenericTypeDefinition()).Equals(genericService)) return null;
+
+            var makedGenericType = implementorType.MakeGenericType(concreteType.GenericTypeArguments);
+            return new ComponentRegistration(service, new ReflectiveActivator(makedGenericType));
 
             #endregion
         }
