@@ -58,7 +58,7 @@ namespace Manualfac.Test
             var c = cb.Build();
 
             var resolved = c.ResolveNamed<IG<int>>(name);
-            
+
             Assert.True(resolved.GetType().GetGenericTypeDefinition() == typeof(G<>));
             Assert.Throws<DependencyResolutionException>(() => c.Resolve<IG<int>>());
         }
