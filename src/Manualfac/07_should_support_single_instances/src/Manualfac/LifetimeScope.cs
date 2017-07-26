@@ -25,7 +25,7 @@ namespace Manualfac
 
             #region Please initialize root scope
 
-            throw new NotImplementedException();
+            RootScope = parent != null ? parent.RootScope : this;
 
             #endregion
         }
@@ -45,11 +45,11 @@ namespace Manualfac
         {
             /*
              * There is a missing concept in lifetime scope is instance storge. Currently, part of this
-             * function is provided by ResolveComponent method. But Resolving is not equivalent with 
-             * storage. Resolving means that it will not only creat the instance, but store it to 
+             * function is provided by ResolveComponent method. But Resolving is not equivalent with
+             * storage. Resolving means that it will not only creat the instance, but store it to
              * correct lifetime scope (may be current one, and may be not) as well. And this is why
              * we extract the method.
-             * 
+             *
              * This method will create, track and cache(if needed) instance in current lifetime scope.
              * Simple enough huh? The Sharing property will help you to determine whether the activated
              * instace be shared.
@@ -57,7 +57,21 @@ namespace Manualfac
 
             #region Please implement this method
 
-            throw new NotImplementedException();
+            if (registration == null) throw new ArgumentNullException(nameof(registration));
+
+            if (sharedInstances.ContainsKey(registration.Service))
+            {
+                return sharedInstances[registration.Service];
+            }
+
+            var component = registration.Activator.Activate(this);
+            if (registration.Sharing == InstanceSharing.Shared)
+            {
+                sharedInstances[registration.Service] = component;
+            }
+
+            Disposer.AddItemsToDispose(component);
+            return component;
 
             #endregion
         }
@@ -69,8 +83,7 @@ namespace Manualfac
             /*
              * Create a child life-time scope in this method.
              */
-
-            throw new NotImplementedException();
+            return new LifetimeScope(componentRegistry, this);
 
             #endregion
         }
@@ -84,7 +97,13 @@ namespace Manualfac
              * We extract this method for isolation of responsibility.
              */
 
-            throw new NotImplementedException();
+            ComponentRegistration registration;
+
+            if (componentRegistry.TryGetRegistration(service, out registration))
+            {
+                return registration;
+            }
+            throw new DependencyResolutionException();
 
             #endregion
         }

@@ -59,7 +59,7 @@ namespace Manualfac.Test
             var c = cb.Build();
 
             var resolved = c.ResolveNamed<IG<int>>(name);
-            
+
             Assert.True(resolved.GetType().GetGenericTypeDefinition() == typeof(G<>));
             Assert.Throws<DependencyResolutionException>(() => c.Resolve<IG<int>>());
         }
@@ -139,7 +139,7 @@ namespace Manualfac.Test
             Assert.Same(gint1inAnother, gint2inAnother);
             Assert.NotSame(gint1, gint1inAnother);
         }
-        
+
         [Fact]
         public void SingleInstanceAppliedToOpenGenerics()
         {
