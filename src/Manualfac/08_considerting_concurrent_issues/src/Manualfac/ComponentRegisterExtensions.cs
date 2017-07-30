@@ -31,7 +31,7 @@ namespace Manualfac
                     new ReflectiveActivator(typeof(T)),
                     typeof(T)));
         }
-        
+
         public static IRegistrationBuilder RegisterComponent(
             this ContainerBuilder cb,
             Service service,
