@@ -25,7 +25,7 @@ namespace Manualfac
 
             #region Please initialize root scope
 
-            RootScope = parent != null ? parent.RootScope : this;
+            RootScope = parent?.RootScope ?? this;
 
             #endregion
         }
@@ -57,11 +57,12 @@ namespace Manualfac
 
             #region Please implement this method
 
-            if (registration == null) throw new ArgumentNullException(nameof(registration));
-
-            if (sharedInstances.ContainsKey(registration.Service))
+            if (registration.Sharing == InstanceSharing.Shared)
             {
-                return sharedInstances[registration.Service];
+                if (sharedInstances.ContainsKey(registration.Service))
+                {
+                    return sharedInstances[registration.Service];
+                }
             }
 
             var component = registration.Activator.Activate(this);
