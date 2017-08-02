@@ -7,7 +7,7 @@ namespace LocalApi
     static class HttpRequestExtension
     {
         const string requestContextKey = "LocalApi.RequestContext";
-        
+
         public static void SetRequestContext(
             this HttpRequestMessage request,
             HttpConfiguration configuration,
@@ -32,8 +32,7 @@ namespace LocalApi
             /*
              * Please implement the method to dispose request context if there is any.
              */
-
-            throw new NotImplementedException();
+            request.GetRequestContext()?.Dispose();
 
             #endregion
         }
