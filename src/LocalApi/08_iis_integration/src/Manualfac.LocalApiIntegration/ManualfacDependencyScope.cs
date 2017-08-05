@@ -17,7 +17,7 @@ namespace Manualfac.LocalApiIntegration
         /*
          * We should create a manualfac dependency scope so that we can integrate it
          * to LocalApi.
-         * 
+         *
          * You can add a public/internal constructor and non-public fields if needed.
          */
         public void Dispose()
