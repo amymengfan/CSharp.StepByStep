@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Task2017.Extensions
 {
-    public static class RequestExtension
+    static class RequestExtension
     {
         public static HttpResponseMessage CreateStringContentResponse(this HttpRequestMessage request, string content)
         {

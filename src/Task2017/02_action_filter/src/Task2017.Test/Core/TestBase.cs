@@ -1,28 +1,36 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http;
+using Autofac;
+
+// ReSharper disable VirtualMemberCallInConstructor
 
 namespace Task2017.Test.Core
 {
     public abstract class TestBase : IDisposable
     {
-        protected string BaseUri;
+        protected readonly string BaseUri;
+        protected readonly IContainer Scope;
         protected HttpResponseMessage Response;
         readonly HttpClient Client;
         readonly HttpServer Server;
 
         protected TestBase()
         {
-            BaseUri = "http://task.com";
-
             var config = new HttpConfiguration();
-            Bootstrap.Init(config);
 
+            BaseUri = "http://task.com";
+            Scope = new Bootstrap(config).BeforeBuild(MockDependency()).Init();
             Server = new HttpServer(config);
             Client = new HttpClient(Server)
             {
                 BaseAddress = new Uri(BaseUri)
             };
+        }
+
+        protected virtual Action<ContainerBuilder> MockDependency()
+        {
+            return builder => { };
         }
 
         protected HttpResponseMessage Get(string uri)

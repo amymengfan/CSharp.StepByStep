@@ -1,6 +1,6 @@
 ﻿namespace Task2017.Services
 {
-    public class TaskService
+    public class TasksService
     {
         public string Copy(string uri)
         {

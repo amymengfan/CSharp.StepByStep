@@ -5,21 +5,21 @@ using Task2017.Services;
 
 namespace Task2017.Controllers
 {
-    [RoutePrefix("task")]
-    public class TaskController : ApiController
+    [RoutePrefix("tasks")]
+    public class TasksController : ApiController
     {
-        readonly TaskService taskService;
+        readonly TasksService tasksService;
 
-        public TaskController(TaskService taskService)
+        public TasksController(TasksService tasksService)
         {
-            this.taskService = taskService;
+            this.tasksService = tasksService;
         }
 
         [Route("")]
         [HttpGet]
         public HttpResponseMessage Index()
         {
-            var copy = taskService.Copy("Task Index.");
+            var copy = tasksService.Copy("Tasks Index.");
             return Request.CreateStringContentResponse(copy);
         }
     }

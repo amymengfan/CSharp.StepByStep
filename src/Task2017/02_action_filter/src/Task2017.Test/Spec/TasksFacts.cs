@@ -4,15 +4,15 @@ using Xunit;
 
 namespace Task2017.Test.Spec
 {
-    public class TaskFacts : TestBase
+    public class TasksFacts : TestBase
     {
         [Fact]
         void should_get_task_index()
         {
-            Get("task");
+            Get("tasks");
 
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
-            Assert.Equal("Task Index.", Body());
+            Assert.Equal("Tasks Index.", Body());
         }
     }
 }

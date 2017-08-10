@@ -6,19 +6,19 @@ using Task2017.Filters;
 namespace Task2017.Controllers
 {
     [StopwatchFilter]
-    [RoutePrefix("stopwatch")]
-    public class StopwatchController : ApiController
+    [RoutePrefix("filters")]
+    public class ActionFilterController : ApiController
     {
-        [Route("one")]
+        [Route("stopwatch/1")]
         [HttpGet]
-        public HttpResponseMessage One()
+        public HttpResponseMessage StopwatchOne()
         {
             return Request.CreateStringContentResponse("Stopwath one.");
         }
 
-        [Route("two")]
+        [Route("stopwatch/2")]
         [HttpGet]
-        public HttpResponseMessage Two()
+        public HttpResponseMessage StopwatchTwo()
         {
             return Request.CreateStringContentResponse("Stopwatch two.");
         }

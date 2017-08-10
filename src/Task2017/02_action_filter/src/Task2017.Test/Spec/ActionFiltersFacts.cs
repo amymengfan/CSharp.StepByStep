@@ -8,12 +8,12 @@ using Xunit;
 
 namespace Task2017.Test.Spec
 {
-    public class StopwatchFacts : TestBase
+    public class ActionFiltersFacts : TestBase
     {
         [Fact]
         void should_get_stopwatch_one()
         {
-            Get("stopwatch/one");
+            Get("filters/stopwatch/1");
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
 
             var logger = Scope.Resolve<ILogService>() as LogServiceFake;
@@ -25,7 +25,7 @@ namespace Task2017.Test.Spec
         [Fact]
         void should_get_stopwatch_two()
         {
-            Get("stopwatch/two");
+            Get("filters/stopwatch/2");
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
 
             var logger = Scope.Resolve<ILogService>() as LogServiceFake;

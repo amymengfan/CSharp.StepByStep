@@ -10,7 +10,7 @@ namespace Task2017
         {
             var config = GlobalConfiguration.Configuration;
 
-            Bootstrap.Init(config);
+            new Bootstrap(config).Init();
         }
     }
 }
