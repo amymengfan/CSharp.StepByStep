@@ -15,12 +15,11 @@ namespace Tasks2017.Test.Spec
         {
             Get("filters/stopwatch/1");
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
-            Assert.Equal("Filters stopwatch 1.", Body());
+            Assert.Equal("Filter stopwatch 1.", Body());
 
             var logger = Scope.Resolve<ILogService>() as LogServiceFake;
             Assert.NotNull(logger);
-            Assert.Contains("stopwatch start", logger.Messages[0]);
-            Assert.Contains("stopwatch end", logger.Messages[1]);
+            Assert.Contains("Stopwatch filter, elapsed: {0}, request: {@1}, response: {@2}.", logger.Messages);
         }
 
         [Fact]
@@ -28,12 +27,11 @@ namespace Tasks2017.Test.Spec
         {
             Get("filters/stopwatch/2");
             Assert.Equal(HttpStatusCode.OK, Response.StatusCode);
-            Assert.Equal("Filters stopwatch 2.", Body());
+            Assert.Equal("Filter stopwatch 2.", Body());
 
             var logger = Scope.Resolve<ILogService>() as LogServiceFake;
             Assert.NotNull(logger);
-            Assert.Contains("stopwatch start", logger.Messages[0]);
-            Assert.Contains("stopwatch end", logger.Messages[1]);
+            Assert.Contains("Stopwatch filter, elapsed: {0}, request: {@1}, response: {@2}.", logger.Messages);
         }
 
         protected override Action<ContainerBuilder> MockDependency()

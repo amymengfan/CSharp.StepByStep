@@ -13,14 +13,16 @@ namespace Tasks2017.Filters
         public override void OnActionExecuting(HttpActionContext context)
         {
             context.Request.Properties[StopwatchKey] = Stopwatch.StartNew();
-            context.Resolve<ILogService>().Info("stopwatch start.");
         }
 
         public override void OnActionExecuted(HttpActionExecutedContext context)
         {
             var stopwatch = (Stopwatch) context.Request.Properties[StopwatchKey];
-            var milliseconds = stopwatch.Elapsed.TotalMilliseconds;
-            context.Resolve<ILogService>().Info($"stopwatch end, elapsed {milliseconds}.");
+
+            var logService = context.Resolve<ILogService>();
+
+            logService.Info("Stopwatch filter, elapsed: {0}, request: {@1}, response: {@2}.",
+                stopwatch.Elapsed.TotalMilliseconds, context.Request, context.Response);
             stopwatch.Stop();
         }
     }

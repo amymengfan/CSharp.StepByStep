@@ -101,16 +101,20 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configs\AutofacConfig.cs" />
+    <Compile Include="Configs\SerilogConfig.cs" />
+    <Compile Include="Configs\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ActionFiltersController.cs" />
-    <Compile Include="Extensions\HttpActionContextExtension.cs" />
+    <Compile Include="Controllers\MessageHandlersController.cs" />
+    <Compile Include="Extensions\HttpContextExtension.cs" />
     <Compile Include="Extensions\RequestExtension.cs" />
     <Compile Include="Filters\StopwatchFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\TasksController.cs" />
-    <Compile Include="Serilog.cs" />
+    <Compile Include="Handlers\StopwatchHandler.cs" />
     <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\TasksService.cs" />

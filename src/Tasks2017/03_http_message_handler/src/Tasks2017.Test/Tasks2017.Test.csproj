@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Fakes\LogServiceFake.cs" />
     <Compile Include="Spec\ActionFiltersFacts.cs" />
+    <Compile Include="Spec\MessageHandlersFacts.cs" />
     <Compile Include="Spec\TasksFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\TestBase.cs" />

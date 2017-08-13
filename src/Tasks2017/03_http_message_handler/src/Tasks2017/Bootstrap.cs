@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Reflection;
 using System.Web.Http;
 using Autofac;
-using Autofac.Integration.WebApi;
-using Tasks2017.Services;
+using Tasks2017.Configs;
 
 namespace Tasks2017
 {
@@ -15,7 +13,6 @@ namespace Tasks2017
         public Bootstrap(HttpConfiguration config)
         {
             this.config = config;
-            this.beforeBuild = builder => { };
         }
 
         public Bootstrap BeforeBuild(Action<ContainerBuilder> action)
@@ -26,22 +23,11 @@ namespace Tasks2017
 
         public IContainer Init()
         {
-            Serilog.Init();
-            return InitScope();
-        }
+            var scope = AutofacConfig.Register(beforeBuild);
 
-        IContainer InitScope()
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterType<TasksService>().InstancePerLifetimeScope();
-            builder.RegisterType<LogService>().As<ILogService>().SingleInstance();
-            beforeBuild(builder);
+            WebApiConfig.Register(config, scope);
+            SerilogConfig.Register();
 
-            var scope = builder.Build();
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(scope);
-            config.MapHttpAttributeRoutes();
-            config.EnsureInitialized();
             return scope;
         }
     }

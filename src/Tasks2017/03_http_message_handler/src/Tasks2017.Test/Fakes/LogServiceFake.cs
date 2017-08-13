@@ -5,16 +5,21 @@ namespace Tasks2017.Test.Fakes
 {
     class LogServiceFake : ILogService
     {
-        public readonly List<string> Messages;
+        public List<string> Messages { get; }
 
         public LogServiceFake()
         {
             this.Messages = new List<string>();
         }
 
-        public void Info(string message)
+        public void Info(string template)
         {
-            this.Messages.Add(message);
+            this.Messages.Add(template);
+        }
+
+        public void Info(string template, params object[] args)
+        {
+            this.Messages.Add(template);
         }
     }
 }

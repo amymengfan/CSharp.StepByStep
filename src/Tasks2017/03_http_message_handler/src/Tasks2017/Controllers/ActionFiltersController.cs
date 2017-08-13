@@ -13,14 +13,14 @@ namespace Tasks2017.Controllers
         [HttpGet]
         public HttpResponseMessage StopwatchOne()
         {
-            return Request.CreateStringContentResponse("Filters stopwatch 1.");
+            return Request.CreateStringContentResponse("Filter stopwatch 1.");
         }
 
         [Route("stopwatch/2")]
         [HttpGet]
         public HttpResponseMessage StopwatchTwo()
         {
-            return Request.CreateStringContentResponse("Filters stopwatch 2.");
+            return Request.CreateStringContentResponse("Filter stopwatch 2.");
         }
     }
 }

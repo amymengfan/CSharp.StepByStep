@@ -2,6 +2,8 @@
 {
     public interface ILogService
     {
-        void Info(string message);
+        void Info(string template);
+
+        void Info(string template, params object[] args);
     }
 }
