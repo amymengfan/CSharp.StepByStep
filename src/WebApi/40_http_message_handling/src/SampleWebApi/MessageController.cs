@@ -14,7 +14,7 @@ namespace SampleWebApi
             // order to pass the test.
             // You can add new files if you want. But you cannot change any existed code.
 
-            return Request.CreateResponse(HttpStatusCode.OK, new MessageDto("Hello"));
+            return Request.CreateResponse(HttpStatusCode.OK, new MessageDto {Message = "Hello"});
 
             #endregion
         }
