@@ -14,13 +14,13 @@ namespace Tasks2017.Handlers
             CancellationToken cancellationToken)
         {
             var stopwatch = Stopwatch.StartNew();
-            var logService = request.Resolve<ILogService>();
 
             return base.SendAsync(request, cancellationToken)
                 .ContinueWith(task =>
                 {
                     var response = task.Result;
 
+                    var logService = request.Resolve<ILogService>();
                     logService.Info("Stopwatch handler, elapsed: {0}, request: {@1}, response: {@2}.",
                         stopwatch.Elapsed.TotalMilliseconds, request, response);
                     stopwatch.Stop();

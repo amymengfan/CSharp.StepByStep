@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http;
-using System.Runtime.Serialization;
 using System.Web.Http;
 
 namespace SampleWebApi
@@ -18,18 +17,6 @@ namespace SampleWebApi
             return Request.CreateResponse(HttpStatusCode.OK, new MessageDto("Hello"));
 
             #endregion
-        }
-
-        [DataContract]
-        class MessageDto
-        {
-            [DataMember]
-            public string Message { get; set; }
-
-            public MessageDto(string message)
-            {
-                Message = message;
-            }
         }
     }
 }

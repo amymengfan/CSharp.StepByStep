@@ -5,7 +5,7 @@ namespace HandleResponsePractice
 {
     public static class ObjectExtensions
     {
-        static readonly BindingFlags bindingFlags = 
+        static readonly BindingFlags bindingFlags =
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
 
         public static PropertyInfo[] GetPublicDeclaredProperties(this object obj)
