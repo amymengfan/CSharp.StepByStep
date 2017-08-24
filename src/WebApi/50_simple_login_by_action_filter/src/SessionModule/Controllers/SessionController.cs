@@ -33,7 +33,7 @@ namespace SessionModule.Controllers
             }
 
             return Request.CreateResponse(
-                HttpStatusCode.OK, 
+                HttpStatusCode.OK,
                 new {Token = token, UserFullname = userSession.Username});
         }
 
@@ -55,8 +55,8 @@ namespace SessionModule.Controllers
             // A created result should contains the resource URI. Since the user
             // has logged into the system, it should contains the correct cookie
             // setter.
-
-            throw new NotImplementedException();
+            response.Headers.Location = new Uri(Url.Link("get session", new {token}), UriKind.RelativeOrAbsolute);
+            response.Headers.AddCookies(new [] {new CookieHeaderValue(SessionCookieKey, token)});
 
             #endregion
 
@@ -72,7 +72,10 @@ namespace SessionModule.Controllers
                 #region Please implement the method removing the cookie
 
                 // Please clear the session cookie from the browser.
-                throw new NotImplementedException();
+                response.Headers.AddCookies(new[]
+                {
+                    new CookieHeaderValue(SessionCookieKey, "") {Expires = DateTimeOffset.Now}
+                });
 
                 #endregion
             }

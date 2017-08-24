@@ -11,7 +11,7 @@ namespace ServiceProvider
 {
     public sealed class ServiceProviderBootstrapper : Bootstrapper.WebApi.Bootstrapper
     {
-        public ServiceProviderBootstrapper(HttpConfiguration configuration) 
+        public ServiceProviderBootstrapper(HttpConfiguration configuration)
             : base(configuration)
         {
         }

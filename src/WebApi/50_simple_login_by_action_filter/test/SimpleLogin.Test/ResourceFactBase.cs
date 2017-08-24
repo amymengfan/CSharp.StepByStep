@@ -46,7 +46,7 @@ namespace SimpleLogin.Test
             ContainerBuilder builder = buildContainerEventArgs.Builder;
             onBuildContainer(builder, ExternalSystem);
         }
-        
+
         public void Dispose()
         {
             ExternalSystem.Dispose();
