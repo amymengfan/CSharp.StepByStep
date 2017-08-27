@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Filters;
@@ -21,17 +24,35 @@ namespace SessionModuleClient
              * We need to create IPrincipal from the authentication token. If
              * we can retrive user session, then the structure of the IPrincipal
              * should be in the following form:
-             * 
+             *
              * ClaimsPrincipal
              *   |- ClaimsIdentity (Primary)
              *        |- Claim: { key: "token", value: "$token value$" }
              *        |- Claim: { key: "userFullName", value: "$user full name$" }
-             * 
+             *
              * If user session cannot be retrived, then the context principal
              * should be an empty ClaimsPrincipal (unauthenticated).
              */
 
-            throw new NotImplementedException();
+            var token = GetToken(context);
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                context.Principal = new ClaimsPrincipal();
+                return;
+            }
+
+            var userSession = await GetUserSession(context, token, cancellationToken);
+            if (userSession == null)
+            {
+                context.Principal = new ClaimsPrincipal();
+                return;
+            }
+
+            context.Principal = new ClaimsPrincipal(new ClaimsIdentity(new []
+            {
+                new Claim("token", token),
+                new Claim("userFullName", userSession.UserFullname)
+            }, "my_authentication"));
 
             #endregion
         }
@@ -50,9 +71,43 @@ namespace SessionModuleClient
              * response.
              */
 
-            throw new NotImplementedException();
+            if (RedirectToLoginOnChallenge)
+            {
+                context.Result = new RedirectToLoginPageIfUnauthorizedResult(context.Request, context.Result);
+            }
+            return Task.CompletedTask;
 
             #endregion
+        }
+
+        static async Task<UserSessionDto> GetUserSession(
+            HttpAuthenticationContext context,
+            string token,
+            CancellationToken cancellationToken)
+        {
+            var client = (HttpClient) context.Request.GetDependencyScope().GetService(typeof(HttpClient));
+            var requestUri = context.Request.RequestUri;
+            var response = await client.GetAsync(
+                $"{requestUri.Scheme}://{requestUri.UserInfo}{requestUri.Authority}/session/{token}",
+                cancellationToken);
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+            return await response.Content.ReadAsAsync<UserSessionDto>(cancellationToken);
+        }
+
+        static string GetToken(HttpAuthenticationContext context)
+        {
+            const string sessionCookieKey = "X-Session-Token";
+
+            var token = context?.Request?.Headers?
+                .GetCookies(sessionCookieKey)?
+                .SelectMany(e => e.Cookies)
+                .FirstOrDefault(e => e.Name == sessionCookieKey)?
+                .Value;
+
+            return token;
         }
     }
 }

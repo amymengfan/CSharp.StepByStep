@@ -25,7 +25,7 @@ namespace SessionModuleClient
             {
                 var redirect = new HttpResponseMessage(HttpStatusCode.Redirect);
                 var requestUri = request.RequestUri;
-                redirect.Headers.Location = 
+                redirect.Headers.Location =
                     new Uri($"{requestUri.Scheme}://{requestUri.UserInfo}{requestUri.Authority}/login.html");
                 return redirect;
             }

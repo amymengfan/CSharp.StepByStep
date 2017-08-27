@@ -1,4 +1,5 @@
-using System;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
@@ -9,7 +10,7 @@ namespace SessionModuleClient
     public class AuthorizationRequiredAttribute : AuthorizationFilterAttribute
     {
         public override Task OnAuthorizationAsync(
-            HttpActionContext actionContext, 
+            HttpActionContext actionContext,
             CancellationToken cancellationToken)
         {
             #region Please implement the method
@@ -21,7 +22,13 @@ namespace SessionModuleClient
              * annotated by this attribute.
              */
 
-            throw new NotImplementedException();
+            var identity = actionContext.RequestContext.Principal?.Identity;
+            if (identity == null || !identity.IsAuthenticated)
+            {
+                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                return Task.CompletedTask;
+            }
+            return Task.CompletedTask;
 
             #endregion
         }
