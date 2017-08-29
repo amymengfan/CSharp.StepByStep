@@ -26,7 +26,6 @@ namespace SessionModuleClient
             if (identity == null || !identity.IsAuthenticated)
             {
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-                return Task.CompletedTask;
             }
             return Task.CompletedTask;
 
