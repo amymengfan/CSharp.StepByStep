@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Http.WebHost;
 
 namespace WebApp
@@ -16,12 +17,18 @@ namespace WebApp
              * space will be used as soon as the input stream of the request has been
              * consumingm or no addtional storage will be used to store the request
              * stream.
-             * 
-             * We are handling large file upload so we should not use streaming if 
+             *
+             * We are handling large file upload so we should not use streaming if
              * the content is something that we do not know (octet-stream).
              */
 
-            throw new NotImplementedException();
+            if (hostContext == null)
+            {
+                throw new ArgumentNullException(nameof(hostContext));
+            }
+
+            var contentType = (hostContext as HttpContextBase)?.Request.ContentType;
+            return !string.IsNullOrEmpty(contentType) && !contentType.Equals("application/octet-stream");
 
             #endregion
         }
