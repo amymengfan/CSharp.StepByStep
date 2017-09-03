@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -70,8 +69,15 @@ namespace StreamingFacts
             /*
              * Please construct the multipart form content to contains all the files.
              */
+            if (contentParts == null)
+                throw new ArgumentNullException(nameof(contentParts));
 
-            throw new NotImplementedException();
+            var multipartContent = new MultipartFormDataContent();
+            foreach (var part in contentParts)
+            {
+                multipartContent.Add(new StreamContent(part.Stream), part.ContentType, part.FileName);
+            }
+            return multipartContent;
 
             #endregion
         }

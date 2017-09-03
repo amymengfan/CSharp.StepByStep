@@ -9,7 +9,7 @@ namespace StreamingFacts
         {
             Client = new HttpClient
             {
-                BaseAddress = new Uri("http://localhost:49724")
+                BaseAddress = new Uri("http://localhost:44444")
             };
         }
 

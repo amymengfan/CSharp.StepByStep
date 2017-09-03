@@ -10,7 +10,7 @@ namespace WebApp
             var httpContext = hostContext as HttpContextBase;
             if (httpContext == null) return true;
             string contentType = httpContext.Request.ContentType;
-            bool isUnknownStream = string.IsNullOrEmpty(contentType) 
+            bool isUnknownStream = string.IsNullOrEmpty(contentType)
                 || contentType.Equals("application/octet-stream");
             return !isUnknownStream;
         }
