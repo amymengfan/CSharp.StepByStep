@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
-using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
 using NHibernate;
-using NHibernate.Context;
 using NHibernate.Linq;
 
 namespace Orm.Practice
