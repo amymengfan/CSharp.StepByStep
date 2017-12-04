@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="AddressRepository.cs" />
+    <Compile Include="AutoMapConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleModelMappingFact.cs" />
   </ItemGroup>
