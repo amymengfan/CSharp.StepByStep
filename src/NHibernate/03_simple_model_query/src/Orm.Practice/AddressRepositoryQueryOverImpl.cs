@@ -75,7 +75,7 @@ namespace Orm.Practice
             return Session.QueryOver<Address>()
                 .Where(e => e.City == city)
                 .OrderBy(e => e.Id).Asc
-                .SelectList(e => e.Select(a => a.Id).Select(a => a.AddressLine1))
+                .Select(e => e.Id, e => e.AddressLine1)
                 .List<object[]>()
                 .Select(e => new KeyValuePair<int, string>((int) e[0], (string) e[1]))
                 .ToList();
