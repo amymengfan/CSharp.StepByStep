@@ -18,7 +18,11 @@ namespace Orm.Practice.Entities
         {
             #region Please modify the code to pass the test
 
-            throw new NotImplementedException();
+            Table("parent");
+            Id(e => e.ParentId).Column("ParentId").GeneratedBy.Guid();
+            Map(e => e.Name).Column("Name");
+            Map(e => e.IsForQuery).Column("IsForQuery");
+            HasMany(e => e.Children).KeyColumn("ParentID").Inverse().Cascade.AllDeleteOrphan();
 
             #endregion
         }

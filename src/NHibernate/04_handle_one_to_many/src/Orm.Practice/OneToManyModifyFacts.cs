@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using NHibernate;
 using NHibernate.Linq;
@@ -52,7 +51,13 @@ namespace Orm.Practice
 
             #region Please modify the code to save a new child to an existing parent
 
-            throw new NotImplementedException();
+            Session.Save(new Child
+            {
+                Name = "nq-child-1-parent-1",
+                IsForQuery = false,
+                Parent = insertedParent
+            });
+            Session.Flush();
 
             #endregion
 
@@ -78,7 +83,7 @@ namespace Orm.Practice
 
             Assert.False(Session.Query<Child>().Any(c => !c.IsForQuery));
         }
-        
+
         void DeleteParentAndChild(string parentName)
         {
             #region Please implement this method
@@ -86,7 +91,8 @@ namespace Orm.Practice
             // This method will delete parent with the spcified name. And children
             // associated with this parent will also be deleted.
 
-            throw new NotImplementedException();
+            Session.Query<Parent>().Where(e => e.Name == parentName).ToList().ForEach(e => Session.Delete(e));
+            Session.Flush();
 
             #endregion
         }
@@ -99,7 +105,22 @@ namespace Orm.Practice
             // with `childrenNames` should also be created and associated with
             // parent.
 
-            throw new NotImplementedException();
+            var parent = new Parent
+            {
+                Name = parentName,
+                IsForQuery = false
+            };
+            var children = childrenNames.Select(e => new Child
+            {
+                Name = e,
+                IsForQuery = false,
+                Parent = parent
+            }).ToList();
+
+            parent.Children = children;
+
+            Session.Save(parent);
+            Session.Flush();
 
             #endregion
         }

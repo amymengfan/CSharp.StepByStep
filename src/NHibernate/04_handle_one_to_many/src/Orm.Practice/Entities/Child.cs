@@ -12,6 +12,7 @@ namespace Orm.Practice.Entities
         #region You can add some code here if you want
 
         // It is totally okay if you do not want to do anything here.
+        public virtual Parent Parent { get; set; }
 
         #endregion
     }
@@ -22,7 +23,11 @@ namespace Orm.Practice.Entities
         {
             #region Please modify the code to pass the test
 
-            throw new NotImplementedException();
+            Table("child");
+            Id(e => e.ChildId).Column("ChildId").GeneratedBy.Guid();
+            Map(e => e.Name).Column("Name");
+            Map(e => e.IsForQuery).Column("IsForQuery");
+            References(e => e.Parent).Column("ParentID");
 
             #endregion
         }
