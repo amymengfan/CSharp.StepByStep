@@ -28,7 +28,6 @@ IF @@ERROR = 3702
     RAISERROR('[AwesomeDb] database cannot be dropped because there are still other open connections', 127, 127) WITH NOWAIT, LOG;
 GO
 
-
 -- ****************************************
 -- Create Database
 -- ****************************************
@@ -122,12 +121,10 @@ GO
 DBCC SHRINKDATABASE ([AwesomeDb]);
 GO
 
-
 USE [master];
 GO
 
 PRINT 'Finished - ' + CONVERT(varchar, GETDATE(), 121);
 GO
-
 
 SET NOEXEC OFF
